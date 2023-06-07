@@ -1,41 +1,51 @@
 import cloudinary from '../../../config/cloudinary';
 import GPT4Service from '../../../services/gpt4Service';
 import pdfService from '../../../services/pdfService';
+import UserService from '../../user/services/UserService';
 import Expense from '../models/Expense';
+import Statement from '../models/Statement';
 
 
 
 class ExpenseService {
   async analyzeBankStatement(file: any, userId: string) {
+    // fetch user from database
+    const user = await UserService.getUserByEmail(userId);
+
+    // if user is not found, throw an error
+    if (!user) {
+      throw new Error("User not found");
+    }
     // Upload file to Cloudinary and get the URL
     const result = await cloudinary.v2.uploader.upload(file);
     const bankStatementUrl = result.url;
     // Parse the PDF document
     const bankStatementText = await pdfService.parsePdf(bankStatementUrl);
 
-    // initiate a chat with gpt-4-32k
-    // const chat = await GPT4Service.initiateChat();
-    // Send bankStatementText to GPT-4 API for analysis
-    const bankStatementAnalysis = await GPT4Service.analyzeBankStatement(bankStatementText);
+    // initiate a chat with GPT-4 API
+    const chat = await GPT4Service.initiateChat();
+    // Send bankStatementText to GPT-4 API for analysis, financial advice and scoring
+    const bankStatementAnalysis = await GPT4Service.analyzeBankStatement(bankStatementText, chat);
 
-    return bankStatementAnalysis;
+    // Send financialAdviceAndScoring to GPT-4 API for formatting
+    const formattedResults = await GPT4Service.formatResults(bankStatementAnalysis);
 
-    // // Send bankStatementAnalysis to GPT-4 API for financial advice and scoring
-    // const financialAdviceAndScoring = await GPT4Service.getFinancialAdvice(bankStatementAnalysis);
+    // save bankstatmenent to database
+    const records = new Statement({
+        userId: user._id,
+        bankStatementUrl,
+    });
 
-    // // Send financialAdviceAndScoring to GPT-4 API for formatting
-    // const formattedResults = await GPT4Service.formatResults(financialAdviceAndScoring);
+    // Save results to the database
+    const expense = new Expense({
+      userId: user._id,
+      bankStatementAnalysis,
+      formattedResults
+    });
 
-    // // Save results to the database
-    // const expense = new Expense({
-    //   userId,
-    //   bankStatementAnalysis,
-    //   financialAdviceAndScoring,
-    //   formattedResults
-    // });
-
-    // await expense.save();
-    // return expense;
+    await records.save();
+    await expense.save();
+    return expense;
   }
 }
 

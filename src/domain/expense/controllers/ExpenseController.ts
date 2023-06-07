@@ -1,5 +1,6 @@
+// src/domain/expense/controller/ExpenseController.ts
 import { Request, Response } from 'express';
-import multer from 'multer';
+import fs from 'fs';
 import ExpenseService from '../services/ExpenseService';
 
 class ExpenseController {
@@ -11,7 +12,14 @@ class ExpenseController {
       }
 
       const expense = await ExpenseService.analyzeBankStatement(uploadedFile.path, req.body.email);
-      res.json(expense);
+
+      fs.unlink(uploadedFile.path, (err) => {
+        if (err) throw err;
+        console.log('Temporary file deleted');
+      });
+
+      res.status(200).json(expense);
+      
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');
