@@ -23,10 +23,40 @@ This application is built with TypeScript and uses Express.js as its server. It 
   7. Send the third prompt to GPT API for formatting the results
   8. Receive and process GPT response, update user's records in MongoDB
   9. Email the final results to the user
+  10. Returns response like this:
+  ```bash
+  {
+    "message": "Bank statement analysis in progress. You will receive an email with the results soon."
+  }
+  ```
+- `GET /expense/fetch/{id}`:
+  1. Fetch expense analysis result from database
+  2. Returns response like this: 
+  ```bash
+  {
+    'message': 'Bank statement analysis fetched successfully',
+    'data' : {
+      'bankStatementAnalysis': bankStatementAnalysis,
+      'formattedResult': formattedResult
+    }
+  }
+  ```
 - `POST /auth/magiclink`:
   1. Authenticate user with magic link
-- `POST /auth/{token}`:
+  2. Returns response like this:
+  ```bash
+  {
+    "msg": "Magic link sent!"
+  }
+  ```
+- `GET /auth/{token}`:
   1. Verify auth token and allow access to gpt service
+  2. Returns response like this:
+  ```bash
+  {
+    "message": "User authenticated successfully",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2EyZDkxNDNiYmRlYzZiYmJjNmIxMyIsImlhdCI6MTY4NjE1MzEwNSwiZXhwIjoxNjg2MjM5NTA1fQ.vpIb6HF9ft8X4cwhnVSjs1FLxSJGKaHNzoIsr4yvVus"
+  }
 
 ## Directory Structure
 

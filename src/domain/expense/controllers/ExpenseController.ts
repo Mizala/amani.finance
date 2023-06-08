@@ -1,6 +1,7 @@
 // src/domain/expense/controller/ExpenseController.ts
 import { Request, Response } from 'express';
 import { analysisQueue } from '../../../services/queueService';
+import ExpenseService from '../services/ExpenseService';
 import fs from 'fs';
 
 class ExpenseController {
@@ -19,6 +20,20 @@ class ExpenseController {
       
       res.status(200).json({ message: 'Bank statement analysis in progress. You will receive an email with the results soon.' });
 
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+    }
+  }
+
+  async fetch(req: Request, res: Response) {
+    try {
+        const { id } = req.params;
+        const result = await ExpenseService.getExpense(id);
+        res.status(200).json({
+            message: 'Bank statement analysis fetched successfully',
+            data: result
+        });
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');

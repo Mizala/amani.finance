@@ -34,11 +34,12 @@ class AuthController {
         "data": {
             "salutation": "Hello,",
             "message": [    
-                `As requested, here is your magic link to sign in to Amani.Finance, yout GPT based financial advisors.<br/>`,
-                `<a href='${loginUrl}' style='text-decoration:none; background-color: #322074; border: 0; border-radius: 7px; padding: 5px 15px; color: white; margin: auto; margin-top: 20px;'>Login<a> <br/>`,
-                `you can click here to access link directly: ${loginUrl} <br/>`,
-                `Please note that this magic link will expire in 1 hour. <br/>`,
-                `If you did not request this magic link, please ignore this email. <br/>`,
+                `<p style="font-size: 16px;">As requested, here is your magic link to sign in to Amani.Finance, yout GPT based financial advisors. </p> <br/>`,
+                `<p style="font-size: 16px;">Please click the button below to login:</p> <br/>`,
+                `<div style="display: flex; margin:auto; justify-content: center;"><a href='${loginUrl}' style="display: inline-block; padding: 10px 20px; font-size: 20px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #322074; border: none; border-radius: 10px; box-shadow: 0 5px #999;">Login<a></div><br/>`,
+                `<p style="font-size: 16px;">you can copy the link here to access it directly: ${loginUrl}</p> <br/>`,
+                `<p style="font-size: 16px;">Please note that this magic link will expire in 1 hour. </p><br/>`,
+                `<p style="font-size: 16px;"> If you did not request this magic link, please ignore this email. </p><br/>`,
             ]
         }
       }, { headers: {'source': 'internal'}})
