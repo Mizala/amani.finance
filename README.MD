@@ -37,7 +37,8 @@ This application is built with TypeScript and uses Express.js as its server. It 
     'message': 'Bank statement analysis fetched successfully',
     'data' : {
       'bankStatementAnalysis': bankStatementAnalysis,
-      'formattedResult': formattedResult
+      'formattedResult': formattedResult,
+      'sarcasticResponse': 'cool & sarcastic feedback'
     }
   }
   ```

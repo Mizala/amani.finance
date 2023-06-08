@@ -35,13 +35,17 @@ class ExpenseService {
       
       // Send financialAdviceAndScoring to GPT-4 API for formatting
       const formattedResults = await GPT4Service.formatResults(bankStatementAnalysis);
+
+      // Include sarcastic/fun response for the user
+      const sarcasticResponse = await GPT4Service.sarcasticResponse(formattedResults);
       
       // Save results to the database
       const expense = new Expense({
         userId: user._id,
         bankStatementUrl,
         bankStatementAnalysis,
-        formattedResults
+        formattedResults,
+        sarcasticResponse
       });
       await expense.save();
       

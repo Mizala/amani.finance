@@ -13,7 +13,8 @@ const ExpenseSchema = new mongoose.Schema({
   },
   bankStatementAnalysis: Object,
   financialAdviceAndScoring: Object,
-  formattedResults: Object
+  formattedResults: Object,
+  sarcasticResponse: Object
 });
 
 const Expense = mongoose.model('Expense', ExpenseSchema);

@@ -32,6 +32,11 @@ class GPT4Service {
     Maximize your moolah: Let's see how we can make your money work harder for you.
     Also, you could save more by allocating [***your recommendation for a savings goal based on their disposable income***] towards a fixed savings target by Mizala and earn free health insurance. Or save ₦350 monthly to get our personal bundle which provides insurance for your health and device, alongside saving your money, and allowing you to withdraw without penalties. Click on the button below to get started."`
   }
+
+  private static sarcasticPrompt = {
+    role: 'user',
+    content: `take on a sarcastic tone and redo the response above, but this time, you would be sarcastic and make fun of the user's spending habits. You would also offer advice on how to improve their finances, but in a sarcastic tone.`
+  }
   
   private async sendRequest(messages: any[]) {
     try {
@@ -115,6 +120,12 @@ class GPT4Service {
 
   async formatResults(prevResponse: object) : Promise<object> {
     const message = [GPT4Service.systemPrompt, prevResponse, GPT4Service.resultFormatPrompt]
+    // Send a request to the API for analysis
+    return this.sendRequest(message);
+  }
+
+  async sarcasticResponse(prevResponse: object) : Promise<object> {
+    const message = [GPT4Service.systemPrompt, prevResponse, GPT4Service.sarcasticPrompt]
     // Send a request to the API for analysis
     return this.sendRequest(message);
   }
