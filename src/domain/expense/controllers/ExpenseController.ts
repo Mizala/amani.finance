@@ -1,7 +1,7 @@
 // src/domain/expense/controller/ExpenseController.ts
 import { Request, Response } from 'express';
+import { analysisQueue } from '../../../services/queueService';
 import fs from 'fs';
-import ExpenseService from '../services/ExpenseService';
 
 class ExpenseController {
   async upload(req: Request, res: Response) {
@@ -10,21 +10,21 @@ class ExpenseController {
       if (!uploadedFile) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
-
-      const expense = await ExpenseService.analyzeBankStatement(uploadedFile.path, req.body.email);
-
-      fs.unlink(uploadedFile.path, (err) => {
-        if (err) throw err;
-        console.log('Temporary file deleted');
-      });
-
-      res.status(200).json(expense);
       
+      // Add a new job to the queue
+      await analysisQueue.add('analysis', {
+        filePath: uploadedFile.path,
+        email: req.body.email
+      });
+      
+      res.status(200).json({ message: 'Bank statement analysis in progress. You will receive an email with the results soon.' });
+
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');
     }
   }
+  
 }
 
 export default new ExpenseController();

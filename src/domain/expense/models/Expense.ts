@@ -7,6 +7,10 @@ const ExpenseSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  bankStatementUrl: {
+    type: String,
+    required: true
+  },
   bankStatementAnalysis: Object,
   financialAdviceAndScoring: Object,
   formattedResults: Object

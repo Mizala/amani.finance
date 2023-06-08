@@ -1,4 +1,4 @@
-// src/domain/expense/models/Expense.ts
+// src/domain/expense/models/Statement.ts
 import mongoose from 'mongoose';
 
 const StatementSchema = new mongoose.Schema({

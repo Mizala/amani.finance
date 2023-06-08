@@ -1,6 +1,5 @@
-// src/services/gpt3Service.ts
+// src/services/gpt4Service.ts
 import axios, {AxiosError} from 'axios';
-const tectalicOpenai = require('@tectalic/openai').default;
 
 class GPT4Service {
   private static endpoint = 'https://api.openai.com/v1/chat/completions';
