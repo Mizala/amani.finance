@@ -3,7 +3,6 @@ import cloudinary from '../../../config/cloudinary';
 import GPT4Service from '../../../services/gpt4Service';
 import UserService from '../../user/services/UserService';
 import Expense from '../models/Expense';
-import Statement from '../models/Statement';
 import axios from 'axios';
 import PdfParse from 'pdf-parse';
 import fs from 'fs';

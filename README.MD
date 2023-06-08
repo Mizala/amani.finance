@@ -1,39 +1,40 @@
-Application Structure:
-1. Setup Express.js server with Typescript.
-2. Connect MongoDB database to the server.
-3. Setup routes:
-    a. POST /expense/upload:
-        i. Accept customer email and PDF of bank statement, then upload to Cloudinary.
-        ii. Retrieve and parse the text from the uploaded PDF.
-        iii. intiate chatgpt with prompt
-        iv. Make second prompt to analyze statement by sending the parsed text to GPT API with specific prompt for bank statement analysis,financial advice & scoring.
-        v. Receive and process GPT response, update users & expense records in MongoDB.
-        vi. Use the results from the financial advice & scoring step to formulate a 3rd GPT API query prompt.
-        vii. Send the third prompt to GPT API for formatting the results.
-        viii. Receive and process GPT response, update user's records in MongoDB.
-        ix. Email the final results to the user.
-    b. POST /auth/magiclink:
-        i. Authenticate user with magic link.
-    c. POST /auth/{token}:
-        i. Verify auth token and allow access to gpt service.
-4. Deploy application to AWS EC2 container.
+# Amani.Finance
 
-Directory Structure:
-src/
+Provide a brief introduction of your project here.
+
+## Application Structure
+
+This application is built with TypeScript and uses Express.js as its server. It connects to a MongoDB database and includes a variety of routes and services. The application is deployed to an AWS EC2 container.
+
+## Setup
+
+- Express.js server with TypeScript
+- MongoDB database
+
+## Routes
+
+- `POST /expense/upload`:
+  1. Accept customer email and PDF of bank statement, then upload to Cloudinary
+  2. Retrieve and parse the text from the uploaded PDF
+  3. Initiate chatgpt with prompt
+  4. Make second prompt to analyze statement by sending the parsed text to GPT API with specific prompt for bank statement analysis, financial advice & scoring
+  5. Receive and process GPT response, update users & expense records in MongoDB
+  6. Use the results from the financial advice & scoring step to formulate a 3rd GPT API query prompt
+  7. Send the third prompt to GPT API for formatting the results
+  8. Receive and process GPT response, update user's records in MongoDB
+  9. Email the final results to the user
+- `POST /auth/magiclink`:
+  1. Authenticate user with magic link
+- `POST /auth/{token}`:
+  1. Verify auth token and allow access to gpt service
+
+## Directory Structure
+
+```bash
+|src/
 |-- config/
 |   |-- cloudinary.ts
 |   |-- mailgun.ts
-|
-|-- domain/
-|   |-- user/
-|       |-- models/
-|           |-- User.ts
-|       |-- services/
-|           |-- UserService.ts
-|       |-- controllers/
-|           |-- UserController.ts
-|       |-- routes/
-|           |-- UserRoutes.ts
 |
 |-- application/
 |   |-- auth/
@@ -71,9 +72,7 @@ src/
 |
 |-- services/
 |   |-- gpt4Service.ts
-|   |-- pdfService.ts
-|
-|-- services/
+|   |-- queueService.ts
 |
 |-- index.ts
-
+```
