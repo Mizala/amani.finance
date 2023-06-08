@@ -1,6 +1,6 @@
 # Amani.Finance
 
-Provide a brief introduction of your project here.
+A ChatGPT based financial assistant and expense manager
 
 ## Application Structure
 
