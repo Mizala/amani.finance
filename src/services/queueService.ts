@@ -4,10 +4,16 @@ import { Queue, Worker } from 'bullmq';
 // import {BullAdapter} from '@bull-board/api/bullAdapter';
 import ExpenseService from '../domain/expense/services/ExpenseService';
 import IORedis from 'ioredis';
-const connection = new IORedis({
+const redisConfig: any = {
   port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
   host: process.env.REDIS_HOST || 'localhost',
-});
+};
+
+if(process.env.REDIS_PASSWORD){
+  redisConfig.password = process.env.REDIS_PASSWORD;
+}
+
+const connection = new IORedis(redisConfig);
 
 // Create an analysis queue
 export const analysisQueue = new Queue('analysis', {connection});
@@ -19,7 +25,7 @@ export const analysisWorker = new Worker('analysis', async job => {
     const { filePath, email } = job.data;
     // Perform the expensive tasks here
     await ExpenseService.analyzeBankStatement(filePath, email);
-    
+
   } catch (err) {
     console.error(err);
   }
