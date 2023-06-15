@@ -1,7 +1,6 @@
 // src/application/auth/AuthController.ts
 import jwt from 'jsonwebtoken';
 import UserService from '../../domain/user/services/UserService';
-import mg from '../../config/mailgun';
 import { Request, Response } from 'express';
 import validator from 'validator';
 import axios from 'axios';
@@ -33,7 +32,7 @@ class AuthController {
         ],
         "data": {
             "salutation": "Hello,",
-            "message": [    
+            "message": [
                 `<p style="font-size: 16px;">As requested, here is your magic link to sign in to Amani.Finance, yout GPT based financial advisors. </p> <br/>`,
                 `<p style="font-size: 16px;">Please click the button below to login:</p> <br/>`,
                 `<div style="display: flex; margin:auto; justify-content: center;"><a href='${loginUrl}' style="display: inline-block; padding: 10px 20px; font-size: 20px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #322074; border: none; border-radius: 10px; box-shadow: 0 5px #999;">Login<a></div><br/>`,
@@ -57,24 +56,24 @@ class AuthController {
 
   async verifyMagicLink(req: Request, res: Response) {
     const { token } = req.params;
-  
+
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'undefined');
-  
+
       if (!decoded || typeof decoded === "string") {
         return res.status(401).json({ msg: 'Invalid or expired token' });
       }
-  
+
       // If you want to return the decoded token
       return res.status(200).json({ message: 'User authenticated successfully', token: token });
-  
+
     } catch (err) {
       console.error(err);
       return res.status(500).send('Server error');
     }
   }
-  
+
 
 }
 
-export default new AuthController(); 
+export default new AuthController();
