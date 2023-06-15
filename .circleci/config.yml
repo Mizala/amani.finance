@@ -17,8 +17,12 @@ workflows:
 jobs:
   staging_build_and_push_and_deploy_docker_image:
     executor: aws-ecr/default
+    resource_class: medium
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
       - aws-ecr/ecr-login:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_ACCESS_KEY_SECRET
