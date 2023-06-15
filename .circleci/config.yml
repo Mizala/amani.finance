@@ -31,4 +31,5 @@ jobs:
       - kubernetes/install-kubectl
       - run: |
           sed -i "s|{{image}}|$AWS_ECR_URL/amani-service:$CIRCLE_SHA1|g" kubernetes.yaml
+          echo $KUBE_CONFIG | base64 -d > kubeconfig.yml
           kubectl --kubeconfig kubeconfig.yml -n staging apply -f kubernetes.yaml
