@@ -27,7 +27,7 @@ jobs:
          registry-id: AWS_ACCOUNT_ID
          dockerfile: Dockerfile
          repo: amani-service
-         tag: "$CIRCLE_SHA1-worker"
+         tag: "$CIRCLE_SHA1"
       - kubernetes/install-kubectl
       - run: |
           sed -i "s|{{image}}|$AWS_ECR_URL/amani-service:$CIRCLE_SHA1|g" kubernetes.yaml
