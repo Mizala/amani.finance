@@ -28,7 +28,7 @@ WORKDIR /home/node/app
 #Copy the package.json file
 COPY package*.json  ./
 
-RUN npm run install
+RUN npm install
 
 
 COPY --chown=node:node . .
