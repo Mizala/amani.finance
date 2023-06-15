@@ -25,7 +25,7 @@ jobs:
           registry-id: AWS_ACCOUNT_ID
       - aws-ecr/build-image:
          registry-id: AWS_ACCOUNT_ID
-         dockerfile: Worker.Dockerfile
+         dockerfile: Dockerfile
          repo: amani-service
          tag: "$CIRCLE_SHA1-worker"
       - kubernetes/install-kubectl
