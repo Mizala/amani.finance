@@ -26,7 +26,7 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 
 #Copy the package.json file
-COPY package.*json  ./
+COPY package*.json  ./
 
 RUN npm run install
 
