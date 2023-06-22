@@ -22,7 +22,9 @@ class AuthController {
       }
 
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'undefined', { expiresIn: '24h' });
-      const loginUrl = process.env.APP_URL + '/auth/' + token;
+
+      const loginUrl = process.env.APP_URL + '/verify-user?token=' + token;
+
       const sendEmail = await axios.post(`${emailUrl}/v1/emails/template`, {
         "template": "default",
         "subject": "Your ChatGPT Financial Advisor Magic Link",
