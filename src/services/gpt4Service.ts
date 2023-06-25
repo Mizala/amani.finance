@@ -30,12 +30,12 @@ class GPT4Service {
     Trim those expenses: Let's examine your spending and find areas to cut back.
     Kickstart your savings: Balance your income and expenses to start a savings plan. Let's aim for saving 20% of your income.
     Maximize your moolah: Let's see how we can make your money work harder for you.
-    Also, you could save more by allocating [***your recommendation for a savings goal based on their disposable income***] towards a fixed savings target by Mizala and earn free health insurance. Or save ₦350 monthly to get our personal bundle which provides insurance for your health and device, alongside saving your money, and allowing you to withdraw without penalties. Click on the button below to get started."`
+    Also, you could save more by allocating [***your recommendation for a savings goal based on their disposable income***] towards a fixed savings target by Mizala and earn free health insurance. Or spend ₦2,500 monthly to get our personal bundle which provides insurance for your health and device, [add elevator pitch for a device + health insurance bundle from mizala]."`
   }
 
   private static sarcasticPrompt = {
     role: 'user',
-    content: `take on a sarcastic tone and redo the response above, but this time, you would be sarcastic and make fun of the user's spending habits. You would also offer advice on how to improve their finances, but in a sarcastic tone.`
+    content: `take on a sarcastic tone and redo the response above, but this time, you would be sarcastic and make fun of the user's spending habits. You would also offer advice on how to improve their finances, but in a sarcastic tone. Write your response with a Nigerian audience in mind.`
   }
   
   private async sendRequest(messages: any[]) {

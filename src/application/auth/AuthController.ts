@@ -12,7 +12,7 @@ class AuthController {
     const emailUrl = process.env.EMAIL_BASE_URL;
     // Validate the email
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ msg: 'Invalid email' });
+      return res.status(400).json({ message: 'Invalid email' });
     }
 
     try {
@@ -22,8 +22,8 @@ class AuthController {
         user = await UserService.createUserByEmail(email);
       }
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'undefined', { expiresIn: '24h' });
-      const loginUrl = process.env.APP_URL + '/auth/' + token;
+      const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET || 'undefined', { expiresIn: '24h' });
+      const loginUrl = process.env.FRONT_END_URL + '/verify-user?token=' + token;
       const sendEmail = await axios.post(`${emailUrl}/v1/emails/template`, {
         "template": "default",
         "subject": "Your ChatGPT Financial Advisor Magic Link",
@@ -48,7 +48,7 @@ class AuthController {
         console.log(sendEmail.data.error);
         return res.status(500).send('Server error');
       }
-      res.json({ msg: 'Magic link sent!' });
+      res.json({ message: 'Magic link sent!' });
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');
@@ -62,11 +62,11 @@ class AuthController {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'undefined');
   
       if (!decoded || typeof decoded === "string") {
-        return res.status(401).json({ msg: 'Invalid or expired token' });
+        return res.status(401).json({ message: 'Invalid or expired token' });
       }
   
       // If you want to return the decoded token
-      return res.status(200).json({ message: 'User authenticated successfully', token: token });
+      return res.status(200).json({ message: 'User authenticated successfully', token: token, user: decoded });
   
     } catch (err) {
       console.error(err);

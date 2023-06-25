@@ -8,7 +8,7 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 router.post('/upload', upload.single('file'), authenticateJWT, ExpenseController.upload);
-router.get('/fetch/:id', authenticateJWT, ExpenseController.fetch);
+router.get('/:id', ExpenseController.fetch);
 
 export default router;
 

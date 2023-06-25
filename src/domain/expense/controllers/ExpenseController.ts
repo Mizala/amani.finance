@@ -18,7 +18,7 @@ class ExpenseController {
         email: req.body.email
       });
       
-      res.status(200).json({ message: 'Bank statement analysis in progress. You will receive an email with the results soon.' });
+      res.status(200).json({ message: 'Bank statement analysis in progress. You will receive an email with your results soon.' });
 
     } catch (err) {
       console.error(err);
