@@ -61,7 +61,11 @@ class ExpenseService {
   async getExpense(id: string) {
     try {
       const expense = await Expense.findById(id);
-      return expense;
+      return {
+        bankStatementAnalysis: expense?.bankStatementAnalysis,
+        formattedResults: expense?.formattedResults,
+        sarcasticResponse: expense?.sarcasticResponse
+      };
     } catch (error) {
       throw error;
     }
@@ -70,7 +74,7 @@ class ExpenseService {
   async sendEmail(email: string, expense: any): Promise<boolean> {
     const emailUrl = process.env.EMAIL_BASE_URL;
     try {
-      const resultUrl = process.env.APP_URL + '/expense/' + expense;
+      const resultUrl = process.env.FRONT_END_URL + '/expense/' + expense;
       const sendEmail = await axios.post(`${emailUrl}/v1/emails/template`, {
         "template": "default",
         "subject": "Your ChatGPT Expense Analysis Result Is Here",
