@@ -26,7 +26,7 @@ class AuthController {
       const sendEmail = await axios.post(`${emailUrl}/v1/emails/template`, {
         "template": "default",
         "subject": "Your ChatGPT Financial Advisor Magic Link",
-        "from": "noreply@amani.finance",
+        "from": "no-reply@mizala.co",
         "recipients": [
            email
         ],
@@ -63,7 +63,7 @@ class AuthController {
       if (!decoded || typeof decoded === "string") {
         return res.status(401).json({ message: 'Invalid or expired token' });
       }
-      
+
       return res.status(200).json({ message: 'User authenticated successfully', token: token, user: decoded });
 
     } catch (err) {
