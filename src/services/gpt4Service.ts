@@ -26,10 +26,7 @@ class GPT4Service {
     Expense management: You're spending significantly on digital services and rent. Maybe I can find you some deals or negotiate better rates?
     Savings and investment: We're not seeing any savings or investments. Don't worry, I can help you get started.
     Here are our recommendations:
-    Boost your income: Can you expand your income sources or negotiate a better contract?
-    Trim those expenses: Let's examine your spending and find areas to cut back.
-    Kickstart your savings: Balance your income and expenses to start a savings plan. Let's aim for saving 10% of your income [your advice should contextualize that inflation in Nigeria is at 22.5% & fuel price has gone up by 200%].
-    Maximize your moolah: Let's see how i can make your money work harder for you.
+    [make recommendations based on their spending habits, income and disposable income for the period]
     Also, you could save more by allocating [***your recommendation for a savings goal based on their disposable income***] towards a fixed savings target by Mizala and earn free health insurance. Or spend from ₦1,800 monthly to get our personal bundle which provides insurance for your health and device, [add elevator pitch for a device + health insurance bundle from mizala]."`
   }
 
