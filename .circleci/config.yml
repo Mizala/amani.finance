@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  kubernetes: circleci/kubernetes@1.3.0
+  aws-ecr: circleci/aws-ecr@8.0.0
+
+workflows:
+  build:
+    jobs:
+      - staging_build_and_push_and_deploy_docker_image:
+          context:
+            - kubernetes
+          filters:
+            branches:
+              only:
+                - staging
+
+jobs:
+  staging_build_and_push_and_deploy_docker_image:
+    executor: aws-ecr/default
+    resource_class: medium
+    steps:
+      - checkout
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_ACCESS_KEY_SECRET
+          registry-id: AWS_ACCOUNT_ID
+      - aws-ecr/build-image:
+         registry-id: AWS_ACCOUNT_ID
+         dockerfile: Dockerfile
+         repo: amani-service
+         tag: "$CIRCLE_SHA1"
+      - kubernetes/install-kubectl
+      - run: |
+          sed -i "s|{{image}}|$AWS_ECR_URL/amani-service:$CIRCLE_SHA1|g" kubernetes.yaml
+          echo $KUBE_CONFIG | base64 -d > kubeconfig.yml
+          kubectl --kubeconfig kubeconfig.yml -n staging apply -f kubernetes.yaml
