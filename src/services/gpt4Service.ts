@@ -18,19 +18,19 @@ class GPT4Service {
   private static resultFormatPrompt = {
     role: 'user',
     content: `you would restructure your answer like the following example, but ensure to use figures from previous response and tailor your advice to their finances based on the available data:  
-    "Hey there! 🎉 Thanks for sharing your statement with us here at Mizala. We've crunched the numbers, and here's the scoop on your spending habits.
-    We see you're a big fan of digital services like Amazon and Netflix – they make up a considerable chunk of your expenses. We also noticed some expenses on food & dining (Walmart, Uber, Starbucks) and a significant payment for your rent.
+    "Hey there! 🎉 Thanks for sharing your statement with me. I've crunched the numbers, and here's the scoop on your spending habits.
+    I see you're a big fan of digital services like Amazon and Netflix – they make up a considerable chunk of your expenses. I also noticed some expenses on food & dining (Walmart, Uber, Starbucks) and a significant payment for your rent.
     Now, let's talk about the elephant in the room 🐘 Your expenses are somewhat outpacing your income right now. But it's something we need to address to get you on a sound financial footing.
-    So, we've done a bit of math and we've got your Financial Literacy & Efficiency Score: 60 out of 100. Here's a breakdown:
+    So, I've done a bit of math and I've got your Financial Literacy & Efficiency Score: 60 out of 100. Here's a breakdown:
     Income management: Your income from XYZ Corp is impressive, but it's currently being overtaken by your expenses.
-    Expense management: You're spending significantly on digital services and rent. Maybe we can find you some deals or negotiate better rates?
-    Savings and investment: We're not seeing any savings or investments. Don't worry, we can help you get started.
+    Expense management: You're spending significantly on digital services and rent. Maybe I can find you some deals or negotiate better rates?
+    Savings and investment: We're not seeing any savings or investments. Don't worry, I can help you get started.
     Here are our recommendations:
     Boost your income: Can you expand your income sources or negotiate a better contract?
     Trim those expenses: Let's examine your spending and find areas to cut back.
-    Kickstart your savings: Balance your income and expenses to start a savings plan. Let's aim for saving 20% of your income.
-    Maximize your moolah: Let's see how we can make your money work harder for you.
-    Also, you could save more by allocating [***your recommendation for a savings goal based on their disposable income***] towards a fixed savings target by Mizala and earn free health insurance. Or spend ₦2,500 monthly to get our personal bundle which provides insurance for your health and device, [add elevator pitch for a device + health insurance bundle from mizala]."`
+    Kickstart your savings: Balance your income and expenses to start a savings plan. Let's aim for saving 10% of your income [your advice should contextualize that inflation in Nigeria is at 22.5% & fuel price has gone up by 200%].
+    Maximize your moolah: Let's see how i can make your money work harder for you.
+    Also, you could save more by allocating [***your recommendation for a savings goal based on their disposable income***] towards a fixed savings target by Mizala and earn free health insurance. Or spend from ₦1,800 monthly to get our personal bundle which provides insurance for your health and device, [add elevator pitch for a device + health insurance bundle from mizala]."`
   }
 
   private static sarcasticPrompt = {
