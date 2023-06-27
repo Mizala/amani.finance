@@ -28,9 +28,28 @@ jobs:
          registry-id: AWS_ACCOUNT_ID
          dockerfile: Dockerfile
          repo: amani-service
-         tag: "$CIRCLE_SHA1"
+         tag: "$CIRCLE_SHA1-$CIRCLE_BUILD_NUM"
       - kubernetes/install-kubectl
       - run: |
-          sed -i "s|{{image}}|$AWS_ECR_URL/amani-service:$CIRCLE_SHA1|g" kubernetes.yaml
+          sed -i "s|{{image}}|$AWS_ECR_URL/amani-service:$CIRCLE_SHA1-$CIRCLE_BUILD_NUM|g" kubernetes.yaml
           echo $KUBE_CONFIG | base64 -d > kubeconfig.yml
           kubectl --kubeconfig kubeconfig.yml -n staging apply -f kubernetes.yaml
+  live_build_and_push_and_deploy_docker_image:
+    executor: aws-ecr/default
+    resource_class: medium
+    steps:
+      - checkout
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_ACCESS_KEY_SECRET
+          registry-id: AWS_ACCOUNT_ID
+      - aws-ecr/build-image:
+          registry-id: AWS_ACCOUNT_ID
+          dockerfile: Dockerfile
+          repo: amani-service
+          tag: "$CIRCLE_SHA1-$CIRCLE_BUILD_NUM"
+      - kubernetes/install-kubectl
+      - run: |
+          sed -i "s|{{image}}|$AWS_ECR_URL/amani-service:$CIRCLE_SHA1-$CIRCLE_BUILD_NUM|g" kubernetes.yaml
+          echo $KUBE_CONFIG | base64 -d > kubeconfig.yml
+          kubectl --kubeconfig kubeconfig.yml apply -f kubernetes.yaml
