@@ -13,6 +13,13 @@ workflows:
             branches:
               only:
                 - staging
+      - live_build_and_push_and_deploy_docker_image:
+          context:
+            - kubernetes
+          filters:
+            branches:
+              only:
+                - master
 
 jobs:
   staging_build_and_push_and_deploy_docker_image:
